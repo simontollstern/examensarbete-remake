@@ -1,0 +1,86 @@
+<%= form_with(model: item, local: true) do |form| %>
+  <% if item.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(item.errors.count, "error") %> prohibited this item from being saved:</h2>
+
+      <ul>
+      <% item.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.hidden_field(:i_type, :value => "invoice") %>
+  </div>
+
+  <div class="field">
+    <%= form.label :priority %>
+    <%= form.select :priority, [ 1, 2, 3 ] %>
+  </div>
+
+  <div class="field">
+    <%= form.label :client %>
+    <%= form.text_field :client, id: :item_client, :required => true %>
+  </div>
+
+  <div class="field">
+    <%= form.label :seller %>
+    <%= form.collection_select :seller, User.order(:firstname), :full_name, :full_name, {:selected => current_user.full_name} %>
+  </div>
+
+  <div class="field">
+    <%= form.label :created %>
+    <%= form.date_select :created, id: :item_created %>
+  </div>
+
+  <div class="field">
+    <%= form.label :price %>
+    <%= form.number_field :price, id: :item_price %>
+  </div>
+
+  <div class="field">
+    <%= form.label :paid %>
+    <%= form.number_field :paid, id: :item_paid %>
+  </div>
+
+  <div class="field">
+    <%= form.label :description %>
+    <%= form.text_area :description, id: :item_description %>
+  </div>
+
+  <div class="field">
+    <%= form.label :url %>
+    <%= form.text_field :url, id: :item_url %>
+  </div>
+
+  <div class="field">
+    <%= form.label :accepted_q %>
+    <%= form.date_select :accepted_q, id: :item_accepted_q %>
+  </div>
+
+  <div class="field">
+    <%= form.label :accepted_c %>
+    <%= form.date_select :accepted_c, id: :item_accepted_c %>
+  </div>
+
+  <div class="field">
+    <%= form.label :accepted_p %>
+    <%= form.date_select :accepted_p, id: :item_accepted_p %>
+  </div>
+<!--
+  <div class="field">
+    <%= form.label :start_date %>
+    <%= form.date_select :start_date, id: :item_start_date %>
+  </div>
+
+  <div class="field">
+    <%= form.label :end_date %>
+    <%= form.date_select :end_date, id: :item_end_date %>
+  </div>
+-->
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

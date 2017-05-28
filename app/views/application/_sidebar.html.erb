@@ -1,0 +1,39 @@
+<div class="sidebar">
+  <%= link_to "#{image_tag('hl-logo.png', :alt => 'HL Design')}".html_safe, root_path %>
+  <hr>
+    <% if current_page?(root_path) %>
+    <% if current_user %>
+    <div class="new-box">
+      <%= link_to 'New Quotation', new_item_path %>
+    </div>
+    <div class="archive-box">
+      <a href="#" class="archive-btn">Archive</a>
+    </div>
+    <div class="search-box">
+      <p>Search</p>
+      <input type="text" id="search" placeholder="Client..">
+    </div>
+    <div class="filter-box">
+      <p>Filter</p>
+      <a href="#" class="checked filter-radio" id="filter-alla"><span></span>All</a>
+      <a href="#" class="filter-radio" id="filter-offerter"><span></span>Quotations</a>
+      <a href="#" class="filter-radio" id="filter-ordrar"><span></span>Commissions</a>
+      <a href="#" class="filter-radio" id="filter-projekt"><span></span>Projects</a>
+      <a href="#" class="filter-radio" id="filter-fakturor"><span></span>Invoices</a>
+      <br />
+      <p>Doesn't work with other filters</p>
+      <a href="#" class="filter-check" id="filter-date"><span></span>Filter by date</a>
+      <select class="select1">
+        <% @items.each do |item| %>
+          <option><%= item.created.strftime("%Y") %></option>
+        <% end %>
+      </select>
+      <select class="select2">
+        <% @items.each do |item| %>
+          <option><%= item.created.strftime("%b") %></option>
+        <% end %>
+      </select>
+    </div>
+    <% end %>
+    <% end %>
+</div>

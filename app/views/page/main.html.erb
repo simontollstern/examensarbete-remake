@@ -1,0 +1,78 @@
+<%= render 'sidebar' %>
+
+<%= render 'header' %>
+
+          <% @items.each do |item| %>
+            <div class="block <%= item.i_type %> prio-<%= item.priority %> <%= item.created.strftime("%Y") %> <%= item.created.strftime("%b") %>">
+              <div class="b-type">
+                <p><%= truncate(item.i_type, :length => 1, :omission => '').capitalize %></p>
+              </div>
+              <p class="b-client"><%= item.client %></p>
+              <div class="block-right">
+                  <p class="b-user"><%= item.seller %></p>
+                  <p class="b-date"><%= item.created.strftime("%Y-%d-%m") %></p>
+                <p class="b-price"><%= item.price %>:-</p>
+              </div>
+              <div class="block-bottom">
+                <div class="block-bottom-left">
+                  <div>
+                    <p class="b-desc"><%= item.description %></p>
+                  </div>
+                  <div class="timeline">
+                    <div>
+                      <p>QUOTATION</p>
+                      <hr class="timeline-left <% if item.i_type == 'quotation' %>timeline-yellow<% elsif item.i_type == 'commission' %>timeline-green<% elsif item.i_type == 'project' %>timeline-green<% else %>timeline-green<% end %>">
+                      <p><% if item.accepted_q %><%= item.accepted_q %><% else %>TBA<% end %></p>
+                    </div>
+                    <div>
+                      <p>COMMISSION</p>
+                      <hr class="<% if item.i_type == 'quotation' %>timeline-grey<% elsif item.i_type == 'commission' %>timeline-yellow<% elsif item.i_type == 'project' %>timeline-green<% else %>timeline-green<% end %>">
+                      <p><% if item.accepted_c %><%= item.accepted_c %><% else %>TBA<% end %></p>
+                    </div>
+                    <div>
+                      <p>PROJECT</p>
+                      <hr class="<% if item.i_type == 'quotation' %>timeline-grey<% elsif item.i_type == 'commission' %>timeline-grey<% elsif item.i_type == 'project' %>timeline-yellow<% else %>timeline-green<% end %>">
+                      <p><% if item.accepted_p %><%= item.accepted_p %><% else %>TBA<% end %></p>
+                    </div>
+                    <div>
+                      <p>INVOICE</p>
+                      <hr class="timeline-right <% if item.i_type == 'quotation' %>timeline-grey<% elsif item.i_type == 'commission' %>timeline-grey<% elsif item.i_type == 'project' %>timeline-grey<% else %>timeline-yellow<% end %>">
+                      <p>TBA</p>
+                    </div>
+                  </div>
+                  <div class="billing">
+                    <div>
+                      <p>BILLING</p>
+                      <div class="progress">
+                        <div class="progress-bar" style="width:<%= ((item.paid.to_f/item.price.to_f)*100).round(0) %>%"></div>
+                      </div>
+                      <p><%= item.paid %>/<%= item.price %> (<%= number_to_percentage((item.paid.to_f/item.price.to_f)*100, precision: 0) %>)</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="block-bottom-right">
+                  <% if item.i_type == 'quotation' %>
+                    <%= link_to '', q_to_c_item_path(item), :class => 'fa fa-check fa-2x' %>
+                    <%= link_to '', edit_item_path(item), :class => 'fa fa-pencil fa-2x' %>
+                  <% elsif item.i_type == 'commission' %>
+                    <%= link_to '', c_to_p_item_path(item), :class => 'fa fa-check fa-2x' %>
+                    <%= link_to '', q_to_c_item_path(item), :class => 'fa fa-pencil fa-2x' %>
+                  <% elsif item.i_type == 'project' %>
+                    <%= link_to '', add_payment_item_path(item), :class => 'fa fa-money fa-2x' %>
+                    <%= link_to '', p_to_i_item_path(item), :class => 'fa fa-check fa-2x' %>
+                    <%= link_to '', c_to_p_item_path(item), :class => 'fa fa-pencil fa-2x' %>
+                  <% else %>
+                    <%= link_to '', add_payment_item_path(item), :class => 'fa fa-money fa-2x' %>
+                    <%= link_to '', p_to_i_item_path(item), :class => 'fa fa-pencil fa-2x' %>
+                  <% end %>
+                  <%= link_to '', item, method: :delete, data: { confirm: "Do you want to remove '#{item.client}'?" }, :class => 'fa fa-close fa-2x' %>
+                  <% if item.url? %>
+                    <%= link_to '', item.url, :class => 'fa fa-file fa-2x' %>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          <% end %>
+
+
+<%= render 'footer' %>

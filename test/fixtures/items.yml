@@ -1,0 +1,33 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  type: 
+  priority: 1
+  client: MyString
+  seller: MyString
+  created: 2017-05-28
+  price: 1
+  paid: 1
+  description: MyText
+  accepted_q: 2017-05-28
+  accepted_c: 2017-05-28
+  accepted_p: 2017-05-28
+  start_date: 2017-05-28
+  end_date: 2017-05-28
+  status: MyString
+
+two:
+  type: 
+  priority: 1
+  client: MyString
+  seller: MyString
+  created: 2017-05-28
+  price: 1
+  paid: 1
+  description: MyText
+  accepted_q: 2017-05-28
+  accepted_c: 2017-05-28
+  accepted_p: 2017-05-28
+  start_date: 2017-05-28
+  end_date: 2017-05-28
+  status: MyString
